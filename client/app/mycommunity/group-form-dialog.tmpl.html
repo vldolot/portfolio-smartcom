@@ -1,0 +1,47 @@
+<md-dialog aria-label="Group Form" ng-cloak flex >
+  <form name="groupForm">
+    <md-toolbar>
+      <div class="md-toolbar-tools blue darken-2">
+        <h2 ng-bind="dialogTitle">Dialog Title</h2>
+        <span flex></span>
+        <md-button class="md-icon-button" ng-click="cancel()">
+          <md-icon aria-label="Close dialog" class="material-icons">close</md-icon>
+        </md-button>
+      </div>
+    </md-toolbar>
+    <md-content id="groupFormDialog" class="autoScroll">
+      <div class="md-dialog-content">
+        <!-- <div layout-gt-sm="row">
+        </div> -->
+        <h3 class="md-title">Define group information:</h3>
+        <div layout-gt-sm="row">
+          <md-input-container flex-gt-sm class="md-icon-left md-block">
+            <label>Group Name</label>
+            <md-icon class="material-icons">supervisor_account</md-icon>
+            <input name="label" ng-model="groupLabel" md-maxlength="50" required ng-change="validateGroupForm()" />
+            <div ng-messages="groupForm.label.$error">
+              <div ng-message="required">This is a required field.</div>
+            </div>
+          </md-input-container>
+        </div>
+        <div layout-gt-sm="row">
+          <md-input-container flex-gt-sm class="md-icon-left md-block">
+            <label>Group Description</label>
+            <md-icon class="material-icons">description</md-icon>
+            <textarea name="description" ng-model="groupDescription" md-maxlength="100" rows="3" md-select-on-focus ></textarea>
+          </md-input-container>
+        </div>
+      </div>
+    </md-content>
+    <md-divider></md-divider>
+    <md-dialog-actions layout="row">
+      <span flex></span>
+      <md-button ng-click="action('cancel')">
+        Cancel
+      </md-button>
+      <md-button ng-click="action('save')" style="margin-right:20px;" ng-disabled="isSaveDisabled">
+        Save
+      </md-button>
+    </md-dialog-actions>
+  </form>
+</md-dialog>

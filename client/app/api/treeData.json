@@ -1,0 +1,57 @@
+[
+  {
+    "id": "1",
+    "label": "Company Name",
+    "description": "Some description about 'Company Name'",
+    "data": {
+      "memberCount": "5",
+      "subGroupCount": "3",
+      "members": [
+        1,2,3,4
+      ],
+      "memberFields": [
+        1,2,3,4
+      ]
+    },
+    "children": [
+      {
+        "id": "1.1",
+        "label": "Department 1",
+        "description": "Some description about 'Department 1'",
+        "data": {
+        },
+        "children": [
+          {
+            "id": "1.1.1",
+            "label": "D1: Team 1",
+            "description": ""
+          }
+        ]
+      },
+      {
+        "id": "1.2",
+        "label": "Department 2",
+        "description": "",
+        "children": [
+          {
+            "id": "1.2.1",
+            "label": "D2: Team 1",
+            "description": "",
+            "children": [
+              {
+                "id": "1.2.1.1",
+                "label": "Sub Team 1",
+                "description": ""
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "1.3",
+        "label": "Department 3",
+        "description": ""
+      }
+    ]
+  }
+]

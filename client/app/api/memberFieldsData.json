@@ -1,0 +1,34 @@
+[
+  {
+    "id": 1,
+    "type": "email",
+    "label": "Email Address",
+    "model": "email",
+    "is_required": true,
+    "is_default": true
+  },
+  {
+    "id": 2,
+    "type": "text",
+    "label": "Mobile Number",
+    "model": "mobileno",
+    "is_required": true,
+    "is_default": true
+  },
+  {
+    "id": 3,
+    "type": "text",
+    "label": "Last Name",
+    "model": "lastname",
+    "is_required": true,
+    "is_default": false
+  },
+  {
+    "id": 4,
+    "type": "textarea",
+    "label": "First Name",
+    "model": "firstname",
+    "is_required": true,
+    "is_default": false
+  }
+]

@@ -1,0 +1,35 @@
+<md-dialog aria-label="Schedule SMS" ng-cloak flex-gt-sm="50" >
+  <form name="scheduleSMS">
+    <md-toolbar>
+      <div class="md-toolbar-tools blue darken-2">
+        <h2 ng-bind="vm.dialogTitle">Dialog Title</h2>
+        <span flex></span>
+        <md-button class="md-icon-button" ng-click="cancel()">
+          <md-icon aria-label="Close dialog" class="material-icons">close</md-icon>
+        </md-button>
+      </div>
+    </md-toolbar>
+    <md-content id="scheduleSMSDialog" class="autoScroll">
+      <div class="md-dialog-content">
+
+        <div layout-gt-sm="row" class="md-block schsms-title" flex>
+          Please select date and time for message delivery:
+        </div>        
+
+        <div layout-gt-sm="row" class="md-block" flex>
+        </div>
+
+      </div>
+    </md-content>
+    <md-divider></md-divider>
+    <md-dialog-actions layout="row">
+      <span flex></span>
+      <md-button ng-click="action('cancel')">
+        Cancel
+      </md-button>
+      <md-button ng-click="action('schedule')" style="margin-right:20px;" class="md-primary">
+        Schedule Delivery
+      </md-button>
+    </md-dialog-actions>
+  </form>
+</md-dialog>

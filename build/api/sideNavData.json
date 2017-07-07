@@ -1,0 +1,45 @@
+[
+	{
+    "name": "Home / Dashboard",
+    "state": "dashboard",
+    "type": "link",
+    "icon": "dashboard"
+	},
+	{
+    "name": "My Community",
+    "state": "community",
+    "type": "link",
+    "icon": "supervisor_account"
+	},
+	{
+    "name": "My Services",
+    "state": "services",
+    "type": "toggle",
+    "icon": "toys",
+    "pages": [
+    {
+      "name": "Broadcast",
+      "type": "link",
+      "state": "services.broadcast",
+      "icon": "speaker_phone"
+    }, 
+    {
+      "name": "Boombastext",
+      "type": "link",
+      "state": "services.boombastext",
+      "icon": "forum"
+    }, 
+    {
+      "name": "Which",
+      "state": "services.which",
+      "type": "link",
+      "icon": "poll"
+    }]
+	},
+	{
+    "name": "Services Store",
+    "state": "services-store",
+    "type": "link",
+    "icon": "store"
+	}
+]

@@ -1,0 +1,19 @@
+{
+  "name": "angular-mocks",
+  "version": "1.5.0-rc.1",
+  "main": "./angular-mocks.js",
+  "ignore": [],
+  "dependencies": {
+    "angular": "1.5.0-rc.1"
+  },
+  "homepage": "https://github.com/angular/bower-angular-mocks",
+  "_release": "1.5.0-rc.1",
+  "_resolution": {
+    "type": "version",
+    "tag": "v1.5.0-rc.1",
+    "commit": "744ae863360cd7a35bbcbe2f61cce53d766e8c05"
+  },
+  "_source": "https://github.com/angular/bower-angular-mocks.git",
+  "_target": "~1.5.0",
+  "_originalSource": "angular-mocks"
+}

@@ -1,0 +1,59 @@
+<md-dialog aria-label="Community Form" ng-cloak>
+  <form name="communityForm">
+    <md-toolbar>
+      <div class="md-toolbar-tools blue darken-2">
+        <h2 ng-bind="vm.dialogTitle">Dialog Title</h2>
+        <span flex></span>
+        <md-button class="md-icon-button" ng-click="vm.cancel()">
+          <md-icon aria-label="Close dialog" class="material-icons">close</md-icon>
+        </md-button>
+      </div>
+    </md-toolbar>
+    <md-content>
+      <md-tabs md-dynamic-height md-border-bottom>
+        <md-tab label="Step 1">
+          <h3 class="md-title">Define community name:</h3>
+          <md-content class="md-padding">
+            <div layout-gt-sm="row">
+              <md-input-container flex-gt-sm>
+                <md-icon class="material-icons">supervisor_account</md-icon>
+                <label>Community Name</label>
+                <input ng-model="community.name" md-maxlength="50" />
+              </md-input-container>
+            </div>
+          </md-content>
+        </md-tab>
+        <md-tab label="Step 2">
+          <md-content class="md-padding">
+            <h3 class="md-title">Configure profile requirements:</h3>
+          </md-content>
+        </md-tab>
+        <md-tab label="Step 3">
+          <md-content class="md-padding">
+            <h3 class="md-title">Enter a member's email address:</h3>
+            <div layout-gt-sm="row" class="autocomplete">
+              <md-chips 
+                ng-model="vm.members"
+                placeholder="Enter a member"
+                delete-button-label="Remove member"
+                delete-hint="Press delete to remove member"
+                secondary-placeholder="+Member"></md-chips>
+            </div>
+            <h3 class="md-title">Or add a new member:</h3>
+
+          </md-content>
+        </md-tab>
+      </md-tabs>
+    </md-content>
+    <md-divider></md-divider>
+    <md-dialog-actions layout="row">
+      <span flex></span>
+      <md-button ng-click="vm.action('cancel')">
+        Cancel
+      </md-button>
+      <md-button ng-click="vm.action('save')" style="margin-right:20px;">
+        Save
+      </md-button>
+    </md-dialog-actions>
+  </form>
+</md-dialog>

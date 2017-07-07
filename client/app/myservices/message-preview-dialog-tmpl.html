@@ -1,0 +1,88 @@
+<md-dialog aria-label="Message Preview" ng-cloak flex >
+  <form name="messagePreview">
+    <md-toolbar>
+      <div class="md-toolbar-tools blue darken-2">
+        <h2 ng-bind="vm.dialogTitle">Dialog Title</h2>
+        <span flex></span>
+        <md-button class="md-icon-button" ng-click="cancel()">
+          <md-icon aria-label="Close dialog" class="material-icons">close</md-icon>
+        </md-button>
+      </div>
+    </md-toolbar>
+    <md-content id="msgPreviewDialog" class="autoScroll">
+      <div class="md-dialog-content">
+        <div class="mp-header">
+          <div layout-gt-sm="row" class="md-block" flex>
+            <span class="mp-header-label">Recipients:</span>
+            <span class="mp-header-value" flex>vldolot@gmail.com (+639181234567)</span>
+          </div>
+          <div layout-gt-sm="row" class="md-block" flex>
+            <span class="mp-header-label">Subject:</span>
+            <span class="mp-header-value" flex>Sample Subject</span>
+          </div>
+          <div layout-gt-sm="row" class="md-block" flex>
+            <span class="mp-header-label">Broadcast Schedule:</span> 
+            <span class="mp-header-value" flex>2016-04-27 04:59 PM</span>
+          </div>
+        </div>
+
+        <div class="mp-message-details">
+          <div layout-gt-sm="row" class="md-block" flex>
+            <md-table-container flex class="md-block md-whiteframe-z1">
+              <table md-table ng-model="vm.messageDetailsModel">
+                <thead md-head md-order="vm.query.order">
+                  <tr md-row>
+                    <th md-column md-order-by="detail.network"><span>Network</span></th>
+                    <th md-column md-numeric># of Recipients</th>
+                    <th md-column md-numeric># of Characters</th>
+                    <th md-column md-numeric># of SMS</th>
+                  </tr>
+                </thead>
+                <tbody md-body>
+                  <tr md-row md-select="detail" md-select-id="network" md-auto-select ng-repeat="detail in vm.messageDetails">
+                    <td md-cell>{{detail.network}}</td>
+                    <td md-cell>{{detail.recipients}}</td>
+                    <td md-cell>{{detail.characters}}</td>
+                    <td md-cell>{{detail.sms}}</td>
+                  </tr>
+                </tbody>
+              </table>
+            </md-table-container>
+          </div>
+          <div layout-gt-sm="row" class="md-block mp-message-details-total" flex>
+            Total SMS:&nbsp;<span class="blue-text text-darken-2">1</span>
+          </div>
+        </div>
+
+        <div class="mp-message">
+          <div layout-gt-sm="row" class="md-block mp-message-counter" flex>
+            Message&nbsp;<em>(100/140)</em>:
+          </div>
+          <div layout-gt-sm="row" class="md-block mp-message-content" flex>
+            Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+          </div>
+        </div>
+
+        <div class="mp-optout-message">
+          <div layout-gt-sm="row" class="md-block mp-optout-message-title" flex>
+            Opt-out Message:
+          </div>
+          <div layout-gt-sm="row" class="md-block mp-optout-message-content" flex>
+            - None -
+          </div>
+        </div>
+
+      </div>
+    </md-content>
+    <md-divider></md-divider>
+    <md-dialog-actions layout="row">
+      <span flex></span>
+      <md-button ng-click="action('cancel')">
+        Cancel
+      </md-button>
+      <md-button ng-click="action('send')" style="margin-right:20px;" class="md-primary">
+        Send
+      </md-button>
+    </md-dialog-actions>
+  </form>
+</md-dialog>

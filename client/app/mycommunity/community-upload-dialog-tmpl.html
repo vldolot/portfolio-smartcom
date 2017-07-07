@@ -1,0 +1,33 @@
+<md-dialog aria-label="Community Upload" ng-cloak>
+  <form name="communityUpload">
+    <md-toolbar>
+      <div class="md-toolbar-tools blue darken-2">
+        <h2 ng-bind="dialogTitle">Dialog Title</h2>
+        <span flex></span>
+        <md-button class="md-icon-button" ng-click="cancel()">
+          <md-icon aria-label="Close dialog" class="material-icons">close</md-icon>
+        </md-button>
+      </div>
+    </md-toolbar>
+    <md-dialog-content>
+      <div class="md-dialog-content">
+        <div layout-gt-sm="row">
+          <md-input-container flex-gt-sm>
+            <label>Upload CSV File</label>
+            <md-icon class="material-icons">file_upload</md-icon>
+            <input type="file" aria-label="Upload CSV File" fileread="vm.uploadme" ng-placeholder="Upload CSV File" />
+          </md-input-container>
+        </div>
+      </div>
+    </md-dialog-content>
+    <md-dialog-actions layout="row">
+      <span flex></span>
+      <md-button ng-click="action('cancel')">
+        Cancel
+      </md-button>
+      <md-button ng-click="action('save')" style="margin-right:20px;">
+        Save
+      </md-button>
+    </md-dialog-actions>
+  </form>
+</md-dialog>

@@ -1,0 +1,6 @@
+<md-button ng-class="" ui-sref-active="active" ui-sref="{{section.state}}" ng-click="closeNav(section)">
+	<i class="material-icons">{{section.icon}}</i>{{section | humanizeDoc}}
+	<span class="md-visually-hidden" ng-if="isSelected()">
+		current page
+	</span>
+</md-button>

@@ -1,0 +1,17 @@
+[
+	{
+		"id": 1,
+		"roleLabel": "Company Admin",
+		"roleKey": "company_admin"
+	},
+	{
+		"id": 2,
+		"roleLabel": "Group Admin",
+		"roleKey": "group_admin"
+	},
+	{
+		"id": 3,
+		"roleLabel": "Member",
+		"roleKey": "member"
+	},
+]

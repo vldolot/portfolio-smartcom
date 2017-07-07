@@ -1,0 +1,71 @@
+<md-dialog aria-label="Member Form" ng-cloak flex >
+  <form name="memberForm">
+    <md-toolbar>
+      <div class="md-toolbar-tools light-green darken-2">
+        <h2 ng-bind="vm.dialogTitle">Dialog Title</h2>
+        <span flex></span>
+        <md-button class="md-icon-button" ng-click="cancel()">
+          <md-icon aria-label="Close dialog" class="material-icons">close</md-icon>
+        </md-button>
+      </div>
+    </md-toolbar>
+    <md-content id="memberFormDialog" class="autoScroll">
+      <div class="md-dialog-content">
+        <div layout-gt-sm="row">
+          <md-input-container class="md-icon-left md-block" flex-gt-sm>
+            <md-icon class="material-icons email">email</md-icon>
+            <input id="email" name="email" ng-model="vm.member.profiles['email_address']" type="text" placeholder="Email Address (required)" md-autofocus required ng-change="vm.validateInput()">
+            <div ng-messages="memberForm.email.$error">
+              <div ng-message="required">This is a required field.</div>
+              <div ng-message="invalid-email">Email address is invalid.</div>
+            </div>
+          </md-input-container>
+          <md-input-container class="md-icon-left md-block" flex-gt-sm>
+            <md-icon class="material-icons mobileno">phone</md-icon>
+            <!-- <label>Mobile Number (required)</label> -->
+            <input id="mobileno" name="mobileno" ng-model="vm.member.profiles['mobile_number']" type="text" placeholder="Mobile Number (required)" required ng-change="vm.validateInput()">
+            <div ng-messages="memberForm.mobileno.$error">
+              <div ng-message="required">This is a required field.</div>
+              <div ng-message="invalid-mobileno">Mobile number is invalid.</div>
+            </div>
+          </md-input-container>
+        </div>
+        <div class="md-block" flex>
+          <!-- <md-input-container class="md-block" flex> -->
+            <label>Define member role: <em>(<a href="#">Create a new role?</a>)</em></label>
+            <multi-select ng-model="vm.member.role_group" available="vm.roles" selected-label="Current role(s)" 
+              available-label="Available role(s)" display-attr="rolelabel" config="vm.selectConfig">
+            </multi-select>
+            <div class="input-error" ng-show="memberForm.numSelected.$error.min">
+              Please select at least 
+              <ng-pluralize count="vm.selectConfig.requiredMin" 
+                  when="{'one': 'one role', 'other': '{} roles'}">.
+            </div>
+            <!-- <input type="hidden" id="reqMin" ng-model="vm.selectConfig.requiredMin" value="1"> -->
+          <!-- </md-input-container> -->
+        </div>
+
+        <div ng-repeat="(index, field) in vm.profileFields | orderBy:field.order">
+          <div layout-gt-sm="row">
+            <md-input-container class="md-block" flex-gt-sm>
+              <label>{{field.label}}</label>
+              <input ng-model="vm.member.profiles[field.model]" type="{{field.type}}">
+            </md-input-container>
+          </div>
+        </div>
+        <!-- <pre>{{memberForm.$valid}}</pre> -->
+
+      </div>
+    </md-content>
+    <md-divider></md-divider>
+    <md-dialog-actions layout="row">
+      <span flex></span>
+      <md-button ng-click="action('cancel')">
+        Cancel
+      </md-button>
+      <md-button ng-click="action('save')" style="margin-right:20px;" ng-disabled="vm.isSaveDisabled">
+        Save
+      </md-button>
+    </md-dialog-actions>
+  </form>
+</md-dialog>

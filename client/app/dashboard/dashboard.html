@@ -1,0 +1,124 @@
+<section id="dashboard-view" class="mainbar" layout-padding>
+  <!-- <section class="matter"> -->
+    <div><!--  class="container" -->
+      <div class="row">
+        <md-content class="" layout-xs="column" layout="row">
+          <div flex-xs flex-gt-xs="100" layout="column">
+            <md-card class="blue-grey darken-2">
+              <md-card-title>
+                <md-card-title-text class="white-text">
+                  <span class="md-headline">Welcome to <strong>Smart</strong>Communities!</span>
+                  <span class="md-subhead">Some description here...</span>
+                </md-card-title-text>
+                <!-- <md-card-title-media>
+                  <div class="md-media-sm card-media"></div>
+                </md-card-title-media> -->
+              </md-card-title>
+              <md-divider></md-divider>
+              <md-card-actions layout="row" layout-align="end center" class="light-blue-text text-lighten-4">
+                <md-button>Learn more</md-button>
+              </md-card-actions>
+            </md-card>
+          </div>
+        </md-content>
+        <md-content layout-xs="column" layout="row">
+          <div flex-xs flex-gt-xs="33" layout="column">
+            <md-card class="pink lighten-1">
+              <md-card-title>
+                <md-card-title-text class="white-text">
+                  <span class="md-headline"><strong>{{vm.groupMsgsCount}}</strong></span>
+                  <span class="md-subhead">New group messages</span>
+                </md-card-title-text>
+              </md-card-title>
+            </md-card>
+          </div>
+          <div flex-xs flex-gt-xs="33" layout="column">
+            <md-card class="light-green darken-1">
+              <md-card-title>
+                <md-card-title-text class="white-text">
+                  <span class="md-headline"><strong>{{vm.privMsgsCount}}</strong></span>
+                  <span class="md-subhead">New private messages</span>
+                </md-card-title-text>
+              </md-card-title>
+            </md-card>
+          </div>
+          <div flex-xs flex-gt-xs="33" layout="column">
+            <md-card class="blue">
+              <md-card-title>
+                <md-card-title-text class="white-text">
+                  <span class="md-headline"><strong>{{vm.newServicesCount}}</strong></span>
+                  <span class="md-subhead">New services in the Services Store</span>
+                </md-card-title-text>
+              </md-card-title>
+            </md-card>
+          </div>
+        </md-content>
+
+
+        <!-- <div class="col-md-12">
+            <ul class="today-datas">
+                <li class="blightblue">
+                    <div class="pull-left"><i class="fa fa-plane"></i></div>
+                    <div class="datas-text pull-right">
+                        <span class="bold">May 18 - 19, 2015</span> Castle Resort, Neverland
+                    </div>
+                    <div class="clearfix"></div>
+                </li>
+
+                <li class="borange">
+                    <div class="pull-left"><i class="fa fa-envelope"></i></div>
+                    <div class="datas-text pull-right">
+                        <span class="bold">{{vm.messageCount}}</span> Messages
+                    </div>
+                    <div class="clearfix"></div>
+                </li>
+
+            </ul>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6">
+            <div class="widget wviolet">
+                <div ht-widget-header title="People"
+                     allow-collapse="true"></div>
+                <div class="widget-content text-center text-info">
+                    <table class="table table-condensed table-striped">
+                        <thead>
+                            <tr>
+                                <th>First Name</th>
+                                <th>Last Name</th>
+                                <th>Age</th>
+                                <th>Location</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="p in vm.people">
+                                <td>{{p.firstName}}</td>
+                                <td>{{p.lastName}}</td>
+                                <td>{{p.age}}</td>
+                                <td>{{p.location}}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="widget-foot">
+                    <div class="clearfix"></div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="widget wgreen">
+                <div ht-widget-header title="{{vm.news.title}}"
+                     allow-collapse="true"></div>
+                <div class="widget-content text-center text-info">
+                    <small>{{vm.news.description}}</small>
+                </div>
+                <div class="widget-foot">
+                    <div class="clearfix"></div>
+                </div>
+            </div>
+        </div> -->
+      </div>
+    </div>
+  <!-- </section> -->
+</section>

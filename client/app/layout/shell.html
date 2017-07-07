@@ -1,0 +1,94 @@
+<div ng-controller="ShellController as vm" layout="row">
+
+  <!-- SIDENAV -->
+  <md-sidenav class="md-sidenav-left md-whiteframe-z2" md-component-id="left" md-is-locked-open="$mdMedia('gt-sm')">
+    <md-toolbar md-scroll-shrink class="nav-header blue-grey darken-3">
+      <div class="md-toolbar-tools" ng-cloak>
+        <a href="/">
+          <div class="brand-logo white-text">
+            <i class="material-icons light-blue-text text-lighten-4">person_pin</i>
+            <strong>Smart</strong>Communities
+          </div>
+        </a>
+        <span flex></span>
+        <md-menu md-position-mode="target-right target" >
+          <md-button class="md-icon-button" aria-label="More Options" ng-click="$mdOpenMenu($event)">
+            <i class="material-icons white-text">more_vert</i>
+          </md-button>
+          <md-menu-content width="3">
+            <md-menu-item ng-repeat="item in [1, 2, 3]">
+              <md-button ng-click="vm.announceClick($index)">
+                  <div layout="row">
+                    <p flex>Option {{item}}</p>
+                  </div>
+              </md-button>
+            </md-menu-item>
+          </md-menu-content>
+        </md-menu>
+      </div>
+    </md-toolbar>
+    <header class="side-nav-user">
+      <div class="user-item">
+        <span class="user-avatar">
+          <i class="material-icons">account_circle</i>
+        </span>
+        <a href="#" class="user-name">User Name&nbsp;<i class="material-icons">arrow_drop_down</i></a>
+        <span class="user-role"><small>User Role</small></span>
+      </div>
+    </header>
+
+    <div ng-include="'app/layout/sidebar.html'"></div>
+  </md-sidenav>
+  <!-- end SIDENAV -->
+
+  <!-- MAIN CONTENT -->
+  <div layout="column" tabindex="-1" role="main" flex>
+    <md-toolbar class="md-whiteframe-z1 site-content-toolbar" ng-show="!vm.showSearch">
+      <div class="md-toolbar-tools topbar-toolbar-tools" tabindex="-1">
+        <md-button class="md-icon-button" hide-gt-sm ng-click="vm.toggleLeftMenu()" aria-label="Toggle Menu">
+          <i class="material-icons white-text">menu</i>
+        </md-button>
+        <div layout="row" flex class="fill-height">
+          <h3 ng-bind="currentPageTitle">Home / Dashboard</h3>
+          <span flex></span>
+          <div layout="row" class="md-toolbar-item topbar-tools">
+            <md-button class="md-icon-button" aria-label="Search" ng-click="vm.showSearch = !vm.showSearch">
+              <i class="material-icons white-text">search</i>
+            </md-button>
+            <md-button class="md-icon-button" aria-label="More Vert" ng-click="vm.showListBottomSheet($event)">
+              <i class="material-icons white-text">more_vert</i>
+            </md-button>
+          </div>
+        </div>
+      </div>
+    </md-toolbar>
+    <md-toolbar class="site-content-toolbar md-whiteframe-z1" ng-show="vm.showSearch">
+      <div class="md-toolbar-tools topbar-toolbar-tools" tabindex="-1">
+        <div layout="row" flex class="fill-height">
+          <md-button class="md-icon-button" ng-click="vm.showSearch = !vm.showSearch" aria-label="Back">
+            <i class="material-icons white-text">arrow_back</i>
+          </md-button>
+          <h3 flex>Back</h3>
+          <span flex></span>
+          <div layout="row" class="md-toolbar-item topbar-tools">
+            <md-input-container>
+              <label>Enter search</label>
+              <input ng-model="search.what" placeholder="enter search">
+            </md-input-container>
+            <md-button class="md-icon-button" aria-label="Search" ng-click="vm.showSearch = !vm.showSearch">
+              <i class="material-icons white-text">search</i>
+            </md-button>
+            <md-button class="md-icon-button" aria-label="Open Settings" ng-click="vm.showListBottomSheet($event)">
+              <i class="material-icons white-text">more_vert</i>
+            </md-button>
+          </div>
+        </div>
+      </div>     
+    </md-toolbar>
+
+    <md-content md-scroll-y flex layout="column">
+      <div ui-view flex="noshrink" layout-align="top center"></div>
+    </md-content>
+  </div>
+  <!-- end MAIN CONTENT -->
+</div>

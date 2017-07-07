@@ -1,0 +1,9 @@
+<li layout="flex">
+		<!-- <md-button class="md-icon-button" aria-label="TreeToggle" ng-click="toggleVisibility(node)"> -->
+      <md-icon class="material-icons blue-text" ng-click="toggleVisibility(node)">{{ ( node.childrenVisibility && node.children.length ) ? 'expand_more' : (node.children.length ? 'expand_less' : 'group') }}</md-icon>
+		<!-- </md-button> -->
+    <!-- <input ng-click="checkNode(node)" type="checkbox" ng-checked="node.checked"> -->
+    <span ng-class="{'node-selected': node.isSelected}" ng-click="selectNode(node)">
+        {{ node.name }}
+    </span>
+</li>

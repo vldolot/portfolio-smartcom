@@ -1,0 +1,115 @@
+<section id="mycommunity-view" class="mainbar" flex="noshrink">
+  <!-- Add Community and Member menu -->
+    <!-- <md-button class="md-fab blue darken-2 md-fab-bottom-left" id="bottom-toolbar-left" aria-label="Upload CSV File" ng-click="vm.showUploadCommunity($event)" ng-cloak>
+      <md-tooltip md-direction="top">Upload CSV file</md-tooltip>
+      <md-icon class="material-icons">file_upload</md-icon>
+    </md-button>
+
+    <md-button class="md-fab light-green darken-2 md-fab-bottom-right" id="bottom-toolbar-right" aria-label="Add Member" ng-click="vm.showAddMember($event)" ng-cloak>
+      <md-tooltip md-direction="top">Add new member</md-tooltip>
+      <md-icon class="material-icons">person_add</md-icon>
+    </md-button> -->
+
+	<div layout="column" flex="noshrink">
+    <md-content layout="row" layout-padding layout-xs="column">
+      <!-- COMMUNITIES TREEVIEW -->
+      <div flex flex-gt-xs="60">
+        <md-card>
+          <md-card-title class="blue lighten-1">
+            <md-card-title-text class="white-text">
+              <span class="md-headline"><strong>Community Structure</strong></span>
+              <!-- <span class="md-subhead">Some description here...</span> -->
+            </md-card-title-text>
+          </md-card-title>
+          <div class="card-toolbar">
+            <md-toolbar class="grey lighten-3">
+              <div class="md-toolbar-tools" layout-fill>
+                <md-button class="md-icon-button" ng-click="vm.communityTree.expand_all()">
+                  <i class="fa fa-expand blue-text"></i>
+                  <!-- <md-icon class="material-icons blue-text">format_line_spacing</md-icon> -->
+                  <md-tooltip md-direction="bottom">Expand all</md-tooltip>
+                </md-button>
+                <md-button class="md-icon-button" ng-click="vm.communityTree.collapse_all()">
+                  <i class="fa fa-compress blue-text"></i>
+                  <!-- <md-icon class="material-icons blue-text">format_line_spacing</md-icon> -->
+                  <md-tooltip md-direction="bottom">Collapse all</md-tooltip>
+                </md-button>
+                <md-button class="md-icon-button" ng-click="vm.showGroupDialog('add', $event)">
+                  <md-icon class="material-icons blue-text">note_add</md-icon>
+                  <md-tooltip md-direction="bottom">Add a Sub-Group</md-tooltip>
+                </md-button>
+                <!-- <md-button class="md-icon-button" ng-click="vm.subGroupAction('edit',$event)">
+                  <md-icon class="material-icons blue-text">mode_edit</md-icon>
+                  <md-tooltip md-direction="bottom">Edit Sub-Group</md-tooltip>
+                </md-button> -->
+                <md-button class="md-icon-button" ng-click="vm.subGroupAction('delete',$event)">
+                  <md-icon class="material-icons blue-text">delete</md-icon>
+                  <md-tooltip md-direction="bottom">Remove a Sub-Group</md-tooltip>
+                </md-button>
+                <span flex></span>
+                <span style="align-items:center; text-align:center; vertical-align:middle; display: flex">
+                  <label style="display: flex"><i class="blue-text material-icons">search</i></label>
+                  <input id="searchTreeId" name="searchTree" ng-model="vm.searchTreeText" type="text" ng-change="vm.searchTreeHandler(vm.searchTreeText, $event)" class="blue-text" placeholder="search group name" />
+                </span>
+              </div>
+            </md-toolbar>
+            <md-divider></md-divider>
+          </div>
+          <md-card-content class="community-content autoScroll" cg-busy="{promise:vm.treeDataPromise,message:'Loading Tree Data',minDuration:500}">
+
+            <abn-tree 
+                tree-data         = "vm.treeData"
+                tree-control      = "vm.communityTree"
+                icon-leaf         = "fa fa-object-group"
+                icon-expand       = "fa fa-chevron-down"
+                icon-collapse     = "fa fa-chevron-right"
+                on-select         = "vm.treeHandler(branch)"
+                expand-level      = "2"
+                initial-selection = "{{vm.initialSelection}}">
+            </abn-tree> 
+
+        	</md-card-content>
+        </md-card>
+      </div>
+      <!--end COMMUNITIES TREEVIEW -->
+
+      <!-- GROUP DETAILS -->
+      <div flex flex-gt-xs="40" layout="column">
+        <md-card ng-if="vm.hasSelected">
+          <md-card-title class="light-green">
+            <md-card-title-text class="white-text">
+              <span class="md-headline"><strong>{{vm.selectedCompany.label}} details</strong></span>
+              <span class="md-subhead">{{vm.selectedCompany.description}} {{vm.selectedCompany.id}}</span>
+            </md-card-title-text>
+          </md-card-title>
+          <md-card-content class="member-content autoScroll">
+
+            <p>No. of Sub-groups: <span class="badge">{{vm.selectedCompany.data.subGroupCount}}</span></p>
+            <p>Members: <span class="badge">{{vm.selectedCompany.data.memberCount}}</span></p>
+            <p>Company Admins: <span class="badge">{{vm.selectedCompany.data.compAdminCount}}</span></p>
+            <p>Group Moderators: <span class="badge">{{vm.selectedCompany.data.grpModCount}}</span></p>
+
+            <!-- <p>No. of Members: <a href="#" ng-click="vm.showMemberList($event)"><span class="badge">{{vm.selectedCompany.data.memberCount}}</span></a></p> -->
+        	</md-card-content>
+          <md-divider></md-divider>
+          <div layout="row" class="group-buttons">
+            <md-button flex="50" ng-click="vm.showGroupDialog('edit', $event)">
+              <i class="material-icons md-36" flex>mode_edit</i>
+              <md-tooltip md-direction="top">Update Group Details</md-tooltip>
+            </md-button>
+            <!-- <span flex></span> -->
+            <md-divider></md-divider>
+            <md-button flex="50" ng-click="vm.subGroupAction('edit',$event,'members')">
+              <i class="material-icons md-36" flex>group_add</i>
+              <md-tooltip md-direction="top">Define Group Members & Membership Rules</md-tooltip>
+            </md-button>
+          </div>
+        </md-card>
+      </div>
+      <!--end GROUP DETAILS -->
+    </md-content>
+
+    <div flex></div>
+
+	</div>
+</section>

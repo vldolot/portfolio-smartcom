@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html lang="en" ng-app="app" class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html lang="en" ng-app="app" class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html lang="en" ng-app="app" class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!--> <html lang="en" ng-app="app" class="no-js"> <!--<![endif]-->
+<html ng-app="app">
+<head>
+  <style>
+      /* This helps the ng-show/ng-hide animations start at the right place. */
+      /* Since Angular has this but needs to load, this gives us the class early. */
+      .ng-hide { display: none!important; }
+  </style>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title ng-bind="title"></title>
+  <meta name="description" content="">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no" />
+  <base href="/">
+
+  <!--Import Google Icon Font-->
+  <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+  <!-- link href="../client/app/bower_components/angular-bootstrap-nav-tree/abn_tree.css" / -->
+
+  <script src="../client/app/bower_components/html5-boilerplate/dist/js/vendor/modernizr-2.8.3.min.js"></script>
+
+  <link rel="stylesheet" href="styles/lib.css">
+
+  <link rel="stylesheet" href="styles/app.css">
+
+</head>
+<body layout="row">
+  <!--[if lte IE 8]>
+      <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
+  <![endif]-->
+
+  <div id="app-shell" ng-include="'app/layout/shell.html'"></div>
+
+  <!-- In production use:
+  <script src="//ajax.googleapis.com/ajax/libs/angularjs/x.x.x/angular.min.js"></script>
+  -->
+
+  <script src="js/lib.js"></script>
+
+  <!-- script type="text/html" src="../client/app/bower_components/angular-bootstrap-nav-tree/abn_tree_directive.js"></script -->
+
+  <script src="js/app.js"></script>
+
+  </body>
+</html>

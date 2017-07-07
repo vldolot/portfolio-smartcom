@@ -1,0 +1,131 @@
+<section id="services-broadcast-view" class="mainbar" flex="noshrink">
+  <form name="broadcastForm">
+    <md-tabs id="broadcastTabs" md-dynamic-height md-border-bottom class="md-padding" md-selected="vm.selectedTab">
+      <!-- TAB 1 -->
+      <md-tab label="COMPOSE MESSAGE">
+        <md-content class="md-padding">
+          <h3 class="md-title">Compose Message:</h3>
+          <p>Compose your sms message and complete the data fields. If you have a csv file, you can use <a href="#">bulk upload</a>.</p>
+
+          <div class="broadcast-form" flex>
+            <md-chips            	
+              ng-model="vm.message.contacts"
+              md-autocomplete-snap
+              md-require-match="true"
+              md-on-select="vm.contactsChipAction('select',$chip, $index)">
+                <md-autocomplete                		
+                    md-no-cache="true"
+                    md-menu-class="chips-autocomplete"
+                    md-selected-item="vm.selectedContact"
+                    md-selected-item-change="vm.selectedContactChange(item, $event)"
+                    md-search-text="vm.contactSearchText"
+                    md-search-text-change="vm.contactSearchTextChange(vm.contactSearchText)"
+                    md-items="item in vm.querySearch('contacts', vm.contactSearchText) "
+                    md-item-text="item.email_address"
+                    placeholder="Recipients: (Enter User Name / Group Name / Email Address or Mobile No.)">
+                  <md-item-template>
+                    <span class="item-title">
+                      <strong md-highlight-text="vm.contactSearchText" md-highlight-flags="^i">{{item.email_address}} ({{item.mobile_number}})</strong>
+                      <span ng-if="item.is_assigned" class="red-text"> - Already assigned as recipient.</span>
+                    </span>
+                  </md-item-template>
+                </md-autocomplete>
+                <md-chip-template>
+                  <strong>{{$chip.email_address}}</strong>
+                </md-chip-template>
+            </md-chips>
+	          <div layout="row" style="padding-top: 30px">
+	            <md-input-container flex class="md-block">
+	              <label>Sender Name</label>
+                <md-select ng-model="vm.message.sendername">
+                  <md-option ng-repeat="n in vm.senderNames" value="{{n.key | lowercase}}">
+                    {{n.value}}
+                  </md-option>
+                </md-select>	              
+	              <div class="hint">A name that you can create and use to identify and differentiate your messages. You can only use your own message subject.</div>
+	            </md-input-container>
+	          </div>
+	          <div layout="row" style="padding-top: 30px">
+	            <md-input-container flex class="md-block">
+	              <label>Message</label>
+		            <textarea class="msgTextArea" ng-model="vm.message.body" md-maxlength="140" rows="3" md-select-on-focus></textarea>
+	            </md-input-container>
+	          </div>
+	          <div layout="row">
+	            <md-input-container class="md-block" flex>
+	              <label>Description</label>
+	              <input ng-model="vm.message.description" type="text">
+	              <div class="hint">You can create a name or label that describe your message for easier tracking.</div>
+	            </md-input-container>
+	          </div>
+	          <!-- <div layout="row" class="md-block">
+                <md-button class="md-primary addField grey lighten-2 replyMessageBtn" ng-click="" flex="30">
+                  Add Reply Message?
+                </md-button>
+	              <span flex="70" class="replyMessage">Reply message is a message providing instructions to your recipients on how to respond or to provide feedback to your message.</span>
+	          </div> -->
+	          <div layout="row">
+	            <md-input-container class="md-block" flex>
+	            	<md-switch class="md-primary" aria-label="Include Opt-Out Message" ng-model="vm.message.optout">
+							    Include Opt-Out Message
+							  </md-switch>
+	              <div class="hint">Opt out message is a message that informs and reminds your recipients on how they can choose to stop receiving sms message from your account.</div>
+	            </md-input-container>
+	          </div>
+          </div>
+
+          <div layout="row" style="align-items: center; padding-top: 10px;">
+            <md-button class="blue lighten-2 blue-text text-lighten-5 sendMessageBtn" ng-click="vm.showMessagePreview('now',$event)">
+              Send Message
+            </md-button>
+            <span flex>Or, <a href="#" ng-click="vm.showMessagePreview('later',$event)">schedule it for later delivery?</a></span>
+          </div>
+
+        </md-content>
+        <md-divider></md-divider>
+      </md-tab>
+
+      <!-- TAB 2 -->
+      <md-tab label="UPLOAD MESSAGE FROM CSV">
+        <md-content class="md-padding">
+          <h3 class="md-title">Upload Message from CSV file:</h3>
+          <p>You can use bulk upload for sending large number of sms messages using a csv file. You can download the csv file by clicking the icon and populate it with your data or messages.</p>
+
+          <div class="broadcast-form" flex>
+            <div>Download Message CSV Template File:</div>
+            <div layout="row">
+              <md-input-container flex>
+                <a href="#"><md-icon class="material-icons blue-text">file_download</md-icon> Click here to download the CSV file</a>
+              </md-input-container>
+            </div>
+            <br />
+            <div>Choose CSV File to upload:</div>
+            <div layout="row">
+              <md-input-container flex>
+                <md-icon class="material-icons light-green-text darken-2">file_upload</md-icon>
+                <input type="file" aria-label="Upload CSV File" ng-file="vm.csvFile" ng-placeholder="Upload CSV File" autofocus="autofocus" />
+              </md-input-container>
+            </div>
+	          <div layout="row">
+	            <md-input-container class="md-block" flex>
+	            	<md-switch class="md-primary" aria-label="Include Opt-Out Message" ng-model="vm.message.optout">
+							    Include Opt-Out Message
+							  </md-switch>
+	              <div class="hint">Opt out message is a message that informs and reminds your recipients on how they can choose to stop receiving sms message from your account.</div>
+	            </md-input-container>
+	          </div>
+          </div>
+
+          <div layout="row" style="align-items: center; padding-top: 10px;">
+            <md-button class="blue lighten-2 blue-text text-lighten-5 sendMessageBtn" ng-click="vm.showMessagePreview('bulk',$event)">
+              Send Message
+            </md-button>
+            <!-- <span flex>Or, <a href="#">schedule it for later delivery?</a></span> -->
+          </div>
+
+        </md-content>
+        <md-divider></md-divider>
+      </md-tab>
+    </md-tabs>
+  </form>
+</section>

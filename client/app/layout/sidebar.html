@@ -1,0 +1,18 @@
+﻿<div ng-controller="SidebarController as vm" id="app-side-nav">
+
+  <md-content flex role="navigation" class="flex">
+    <md-list class="side-menu">
+      <md-subheader>Menu</md-subheader>
+      <md-item ng-repeat="item in vm.menu" class="parent-list-item">
+        <span class="menu-heading" ng-if="item.type === 'heading'"
+            id="heading_{{ item.state | nospace }}">
+          {{item}}
+        </span>
+        <side-nav-link ng-class="vm.isCurrent(item)" section="item" ng-if="item.type === 'link'"></side-nav-link>
+        <side-nav-toggle section="item" ng-if="item.type === 'toggle'"></side-nav-toggle>
+      </md-item>
+      <md-divider></md-divider>
+    </md-list>
+  </md-content>
+
+</div>

@@ -1,0 +1,341 @@
+<section id="mycommunity-view-form" class="mainbar" flex="noshrink" ng-cloak="">
+  <form name="communityForm">
+    <md-toolbar>
+      <div class="md-toolbar-tools blue lighten-1" flex layout="row">
+        <span layout="row" class="formBackButton">
+          <md-button class="md-icon-button" ng-click="vm.formAction('cancel')" aria-label="Back">
+            <i class="material-icons white-text">arrow_back</i>
+          </md-button>
+          <h2 ng-click="vm.formAction('cancel')">Back</h2>
+        </span>
+        <span flex class="formTitle"><h2 ng-bind-html="vm.dialogTitle | sanitize" class="white-text">Dialog Title</h2></span>
+      </div>
+    </md-toolbar>
+
+    <md-tabs id="communityTabs" md-dynamic-height md-border-bottom class="md-padding" md-selected="vm.selectedTab">
+
+      <!-- TAB 1 -->
+      <md-tab label="MEMBERS">
+        <md-content class="md-padding" layout="column">
+          <h3 class="md-title">Define group members:</h3>
+
+          <div id="membersChipsContainer" layout="column" class="autocomplete">
+            <md-radio-group ng-model="vm.formOption">
+              <md-radio-button value="upload">Add group member(s) via CSV file upload?</md-radio-button>
+              <md-radio-button value="manual">or, manually add/choose them?</md-radio-button>
+            </md-radio-group>
+
+            <div class="form-box" flex-gt-xs ng-show="(vm.formOption == 'upload')">
+              <label>Download Members Info CSV Template File:</label>
+              <div layout-gt-sm="row">
+                <md-input-container flex-gt-sm>                  
+                  <a href="#"><md-icon class="material-icons blue-text">file_download</md-icon> Click here to download the CSV template</a>
+                </md-input-container>
+              </div>
+              <br />
+              <label>Upload Members Info CSV File:</label>
+              <div layout="row">
+                <md-input-container flex>
+                  <md-icon class="material-icons light-green-text darken-2">file_upload</md-icon>
+                  <input type="file" aria-label="Upload CSV File" ng-file="vm.csvFile" ng-placeholder="Upload CSV File" autofocus="autofocus" />
+                </md-input-container>
+              </div>
+              <div layout="row">
+                <span flex></span>
+                <md-button class="md-primary addField grey lighten-2" ng-click="">
+                  Upload CSV file
+                </md-button>
+              </div>
+            </div>
+
+            <div class="form-box" flex-gt-xs ng-show="(vm.formOption == 'manual')">
+            <form name="addMemberForm">
+              <label>Search for existing member/s to assign to the group then click the 'Add to Group' button; <br />
+                or create a new one:</label>
+              <!-- <p></p> -->
+              <md-chips 
+                ng-model="vm.membersChips"
+                md-autocomplete-snap
+                md-require-match="true"
+                md-on-select="vm.memberChipAction('select',$chip, $index)">
+                  <md-autocomplete
+                      md-no-cache="true"
+                      md-menu-class="chips-autocomplete"
+                      md-selected-item="vm.selectedMember"
+                      md-selected-item-change="vm.selectedMemberChange(it, $event)"
+                      md-search-text="vm.memberSearchText"
+                      md-search-text-change="vm.memberSearchTextChange(vm.memberSearchText)"
+                      md-items="it in vm.querySearch('members', vm.memberSearchText) "
+                      md-item-text="it.email_address"
+                      md-not-found-click="vm.showMemberForm('add',vm.memberSearchText,$event)"
+                      placeholder="Enter a member's email or mobile no.">
+                    <md-item-template>
+                      <span class="item-title">
+                        <strong md-highlight-text="vm.memberSearchText" md-highlight-flags="^i">{{it.email_address}}</strong>
+                        <span ng-if="it.is_assigned" class="red-text"> - Already assigned to group.</span>
+                      </span>
+                      <span class="item-metadata" >
+                        <span class="item-metastat">
+                          <em>({{it.mobile_number}})</em>
+                        </span>
+                      </span>
+                    </md-item-template>
+                    <md-not-found>
+                      <div class="not-found blue-text">No user/s matching "{{vm.memberSearchText}}" were found.<br/> 
+                        Click here to create a new one.</div>
+                    </md-not-found>
+                  </md-autocomplete>
+                  <md-chip-template>
+                      <strong>{{$chip.email_address}}</strong>
+                      <!-- <em>({{$chip.mobileno}})</em> -->
+                  </md-chip-template>
+              </md-chips>
+              <div layout="row">
+                <span flex></span>
+                <md-button class="md-primary addField grey lighten-2" ng-click="vm.assignedMembersPromise = vm.addMembersToGroup($event)">
+                  Add to Group
+                </md-button>
+              </div>
+            </form>
+            </div>
+
+            <div flex flex-gt-xs style="min-height: 265px;">
+              <p>Members assigned to the group:</p>
+
+              <md-toolbar class="listToolbar grey lighten-3">
+                <div class="md-toolbar-tools" layout-fill>
+                  <md-button class="md-icon-button" ng-click="vm.showMemberForm('add',null,$event)" ng-disabled="vm.addMemberDisabled">
+                    <i class="material-icons blue-text">person_add</i>
+                    <md-tooltip md-direction="top">Create a new user/member</md-tooltip>
+                  </md-button>
+                  <md-button class="md-icon-button" ng-click="vm.selectedMembersAction('toggle-sort',$event)">
+                    <i class="blue-text" ng-class="{'fa fa-sort-alpha-asc': vm.toggleMemberSortAsc, 'fa fa-sort-alpha-desc': !vm.toggleMemberSortAsc }"></i>
+                    <md-tooltip md-direction="top">Sort: {{(vm.toggleMemberSortAsc ? 'Ascending' : 'Descending' )}}</md-tooltip>
+                  </md-button>
+                  <span class="sort-by blue-text">
+                    <md-select ng-model="vm.sortMembersBy" placeholder="Sort by...">
+                      <md-option ng-repeat="f in vm.allProfileFields" value="{{f.model | lowercase}}">
+                        {{f.label}}
+                      </md-option>
+                    </md-select>
+                    <md-tooltip md-direction="top">Sort by: {{vm.sortMembersBy}}</md-tooltip>
+                  </span>
+                  <span flex></span>
+                  <span style="align-items:center; text-align:center; vertical-align:middle; display: flex; min-width:80px">
+                    <label style="display: flex"><i class="blue-text material-icons">search</i></label>
+                    <input id="searchSelectedMembers" name="SelectedMembers" ng-model="vm.searchSelectedMembers" type="text" ng-change="" class="blue-text" placeholder="search member" />
+                  </span>
+                </div>
+              </md-toolbar>
+
+              <div cg-busy="{promise:vm.assignedMembersPromise,message:'Loading assigned members...',minDuration:500}">
+                <div class="noFieldData" ng-hide="vm.selectedMembers.length">No assigned member/s. Add group member(s) by uploading a Member Info CSV file, or manually add/choose them via Assign Member Form.</div>
+                <md-list class="membersList" ng-show="vm.selectedMembers.length > 0">
+                  <md-list-item class="md-3-line list-item secondary-button-padding" ng-repeat="(index, member) in vm.selectedMembers | filter:vm.filterMembersSearch | orderBy:(vm.toggleMemberSortAsc ? vm.sortMembersBy : '-'+vm.sortMembersBy )" layout="row" layout-wrap>
+                    <div class="md-list-item-text md-whiteframe-z1 flex listItemBlock" layout="row" ng-click="vm.showMemberForm('edit',member,$event)">
+                      <span class="listItemDetail">
+                        <h3 md-highlight-text="vm.searchSelectedMembers" md-highlight-flags="^i">{{member.email_address}}</h3>
+                        <p md-highlight-text="vm.searchSelectedMembers" md-highlight-flags="^i">{{member.roles}}</p>
+                        <p>Profile status:<span class="badge statusDefault" ng-class="{'isComplete': member.is_complete}">{{(member.is_complete ? 'Complete' : 'Incomplete')}}</span></p>
+                        <md-tooltip md-direction="top">{{member.email_address}} ({{member.mobile_number}})</md-tooltip>
+                      </span>
+                      <md-divider></md-divider>
+                      <span class="removeButton">
+                        <md-button class="md-icon-button md-secondary" ng-click="vm.removeMemberFromGroup(member, $event)">
+                          <md-icon class="material-icons red-text">close</md-icon>
+                          <md-tooltip md-direction="top">Remove member?</md-tooltip>
+                        </md-button>
+                      </span>  
+                    </div>
+                  </md-list-item>
+                </md-list>
+              </div>
+            </div>
+          </div>
+
+        </md-content>
+        <md-divider></md-divider>
+      </md-tab>
+
+      <!-- TAB 2 -->
+      <md-tab label="PROFILE REQUIREMENTS">
+        <md-content class="md-padding">
+          <h3 class="md-title">Configure profile requirements:</h3>
+
+          <div flex flex-gt-xs style="min-height: 265px;">
+            <!-- <p>Profile fields assigned to the group:</p> -->
+
+              <md-toolbar class="listToolbar grey lighten-3">
+                <div class="md-toolbar-tools" layout-fill layout-gt-sm="row">
+                  <!-- <md-button class="md-icon-button" ng-click="vm.selectedFieldsAction('toggle-sort',$event)">
+                    <i class="blue-text" ng-class="{'fa fa-sort-alpha-asc': vm.toggleFieldSortAsc, 'fa fa-sort-alpha-desc': !vm.toggleFieldSortAsc }"></i>
+                    <md-tooltip md-direction="top">Sort: {{(vm.toggleFieldSortAsc ? 'Ascending' : 'Descending' )}}</md-tooltip>
+                  </md-button>
+                  <span class="sort-by blue-text">
+                    <md-select ng-model="vm.sortFieldsBy" placeholder="Sort by...">
+                      <md-option value="type">Type</md-option>
+                      <md-option value="label">Label</md-option>
+                    </md-select>
+                    <md-tooltip md-direction="top">Sort by: {{vm.sortFieldsBy}}</md-tooltip>
+                  </span> -->
+                  <span flex></span>
+                  <span style="align-items:center; text-align:center; vertical-align:middle; display: flex; min-width:80px">
+                    <label style="display: flex"><i class="blue-text material-icons">search</i></label>
+                    <input flex-gt-sm id="searchSelectedProfileFields" name="SelectedProfileFields" ng-model="vm.searchSelectedProfileFields" type="text" ng-change="" class="blue-text" placeholder="search profile field" />
+                  </span>
+                </div>
+              </md-toolbar>
+
+              <md-toolbar class="md-theme-light fieldsDivider">
+                <h2 class="md-toolbar-tools">
+                  <span>Fields required by Parent Group</span>
+                </h2>
+              </md-toolbar>
+              <ul class="profileFieldsList fieldsRequired">
+                <div class="requiredFieldsContainer">
+                  <li ng-repeat="field in default = (vm.defaultProfileFields)" class="list-item">
+                      <div class="md-list-item-text md-whiteframe-z0 flex listItemBlock" layout="row" ng-click="">
+                        <span class="listItemDetail" layout="row">
+                          <h3 flex md-highlight-text="vm.searchSelectedProfileFields" md-highlight-flags="^i">{{field.label}}</h3>
+                          <md-divider></md-divider>
+                          <p flex >Type: {{field.type}}</p>
+                        </span>
+                      </div>
+                  </li>
+                </div>
+              </ul>
+
+              <md-toolbar class="md-theme-light fieldsDivider">
+                <h2 class="md-toolbar-tools">
+                  <span>Fields assigned to the Group</span>
+                </h2>
+              </md-toolbar>
+            <div cg-busy="{promise:vm.assignedProfileFieldsPromise,message:'Loading profile fields...',minDuration:500}">
+              <div class="noFieldData" ng-hide="custom.length">No assigned custom field/s. Type or choose from the textbox below and click the 'Add Custom Field' button to add the field.</div>
+              <ul dnd-list="vm.customProfileFields"
+                  class="profileFieldsList"
+                  style="min-height: 250px"
+                  ng-show="custom.length > 0">
+
+                  <!-- item in list.items -->
+                  <li ng-repeat="field in custom = (vm.customProfileFields) | filter:vm.filterFieldsSearch | orderBy:field.order"
+                      dnd-effect-allowed="move"
+                      dnd-draggable="field"
+                      dnd-dragstart="vm.dndListHandler('onDragStart',vm.customProfileFields, $index, event)"
+                      dnd-moved="vm.customProfileFields.splice($index, 1)"
+                      dnd-dragend="vm.dndListHandler('onDragEnd',vm.customProfileFields, $index, event)"
+                      dnd-selected="vm.customProfileFields.selected = field"
+                      ng-class="{'selected': vm.customProfileFields.selected === field}"
+                      class="list-item secondary-button-padding"
+                      >
+                    <dnd-nodrag>
+                      <div class="md-list-item-text md-whiteframe-z1 flex listItemBlock" layout="row" ng-click="">
+                        <span dnd-handle class="handleBar">
+                          <md-icon class="material-icons blue-text">drag_handle</md-icon>
+                          <!-- <md-tooltip md-direction="top">Drag to move</md-tooltip> -->
+                        </span>
+                        <span class="listItemDetail" layout="row">
+                          <h3 flex md-highlight-text="vm.searchSelectedProfileFields" md-highlight-flags="^i">{{field.label}}</h3>
+                          <p flex >Type: {{field.type}}</p>
+                          <!-- <md-tooltip md-direction="top">Click to view details</md-tooltip> -->
+                        </span>
+                        <span class="removeButton">
+                          <md-button class="md-icon-button md-secondary" ng-click="vm.profileFieldsAction('removeField',field)">
+                            <md-icon class="material-icons red-text">close</md-icon>
+                            <md-tooltip md-direction="top">Remove field?</md-tooltip>
+                          </md-button>
+                        </span>  
+                      </div>
+                    </dnd-nodrag>
+                  </li>
+                  <li class="dndPlaceholder">Move {{field.label}} here?</li>
+
+              </ul>
+            </div>
+
+          </div>
+          <!-- <pre id="displayFields">{{vm.proFieldsArr}}</pre> -->
+
+          <p>Add existing and/or custom fields for this group and its sub-groups:</p>
+          <div class="fieldsContainer">
+            <div layout="row">
+              <input type="hidden" ng-model="vm.fieldId" />
+              <md-autocomplete flex 
+                  md-input-id="profileFieldsAC"
+                  md-autoselect="false"
+                  md-autofocus="false"
+                  md-menu-class="chips-autocomplete"
+                  md-no-cache="true"
+                  md-selected-item="vm.selectedField"
+                  md-selected-item-change="vm.selectedFieldChange(itm, index, $event)"
+                  md-search-text="vm.fieldSearchText"
+                  md-items="itm in vm.querySearch('profiles', vm.fieldSearchText) "
+                  md-item-text="itm.label"
+                  md-min-length="1"
+                  md-floating-label="Type here to choose or create a new field">
+                  <!-- md-not-found-click="vm.profileFieldsAction('addNewField', itm)" -->
+                <md-item-template>
+                  <span class="item-title">
+                    <strong md-highlight-text="vm.fieldSearchText" md-highlight-flags="^i">{{itm.label}}</strong>
+                    <span ng-if="itm.is_assigned" class="red-text"> - Already assigned to group.</span>
+                  </span>
+                  <span class="item-metadata" >
+                    <span class="item-metastat">
+                      <em>(Type: {{itm.type}})</em>
+                    </span>
+                  </span>
+                </md-item-template>
+                <!-- <md-not-found>
+                  <div class="not-found blue-text">No fields/s matching "{{vm.fieldSearchText}}" were found. Click here to create this field.</div>
+                </md-not-found> -->
+              </md-autocomplete>
+              <md-input-container class="md-block" flex-gt-sm>
+                <label>Field Type</label>
+                <md-select name="fieldType" ng-model="vm.fieldType" required ng-class="{'readOnlyField': vm.toggleReadOnly}">
+                  <md-option ng-repeat="type in vm.types" value="{{type.name}}">
+                    {{type.name}}
+                  </md-option>
+                </md-select>
+                <div ng-messages="communityForm.fieldType.$error" ng-if="communityForm.fieldType.$dirty">
+                  <div ng-message="required">This is a required field.</div>
+                </div>
+              </md-input-container>
+              <input type="hidden" ng-model="vm.fieldModel" />
+              <md-input-container class="md-block" flex="-1">
+                <md-checkbox ng-model="vm.fieldIsRequired" aria-label="Checkbox 1" ng-click="" ng-class="{'readOnlyField': vm.toggleReadOnly}">
+                  Required Field?
+                </md-checkbox>
+              </md-input-container>
+            </div>
+            <div layout="row">
+              <span flex></span>
+              <md-button class="md-primary addField grey lighten-2" ng-click="vm.profileFieldsAction('addField',null,$event)">Add Custom Field</md-button>
+            </div>
+          </div>
+
+          <!-- <p>Fields required by Parent Group:</p>
+          <div class="fieldsContainer">
+            <div class="noFieldData" ng-hide="default.length">No default profile fields.</div>
+            <div ng-repeat="field in default = (vm.defaultProfileFields)">
+              <div layout="row">
+                <p class="fieldIndex">{{$index + 1.}}</p>
+                <md-input-container class="md-block" flex>
+                  <label>Field Label</label>
+                  <input name="fieldLabel" ng-model="field.label" type="text" ng-readonly="true">
+                </md-input-container>
+                <md-input-container class="md-block" flex>
+                  <label>Field Type</label>
+                  <input name="fieldType" ng-model="field.type" type="text" ng-readonly="true">
+                </md-input-container>
+              </div>
+              <md-divider></md-divider>
+            </div>
+          </div> -->
+
+        </md-content>
+        <md-divider></md-divider>
+      </md-tab>
+
+    </md-tabs>
+  </form>
+</section>

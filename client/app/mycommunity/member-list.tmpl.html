@@ -1,0 +1,48 @@
+<md-dialog aria-label="List of Members" ng-cloak style="min-width: 500px;">
+  <md-toolbar>
+    <div class="md-toolbar-tools blue darken-2">
+      <h2 ng-bind="dialogTitle">Dialog Title</h2>
+      <span flex></span>
+      <md-button class="md-icon-button" ng-click="cancel()">
+        <md-icon aria-label="Close dialog" class="material-icons">close</md-icon>
+      </md-button>
+    </div>
+  </md-toolbar>
+  <md-dialog-content style="min-height: 41px;height: 41px;line-height: 41px;">
+    <form>
+      <md-autocomplete
+              md-selected-item="selectedItem"
+              md-search-text="searchText"
+              md-items="member in memberData | filter:searchText"
+              md-item-text="member.name"
+              md-min-length="0"
+              placeholder="Search for Member/s">
+          <md-item-template>
+              <span md-highlight-text="searchText" md-highlight-flags="^i">{{member.name}}</span>
+          </md-item-template>
+      </md-autocomplete>
+    </form>
+  </md-dialog-content>
+  <md-dialog-content class="autoScroll">
+    <div style="min-height: 265px;">
+      <!-- MEMBERS LIST -->
+    	<md-list ng-cloak class="listControls">
+    		<md-list-item ng-repeat="m in memberData | filter:searchText" class="md-2-line secondary-button-padding" ng-click="doPrimaryAction($event)">
+          <div class="md-list-item-text">
+            <h3>{{ m.email }}</h3>
+				    <p>{{ m.mobileNo }}</p>
+				    <md-button class="md-secondary" ng-click="doSecondaryAction($event)">More Info</md-button>
+          </div>
+			  </md-list-item>
+    	</md-list>
+      <!--end MEMBERS LIST -->
+    </div>
+  </md-dialog-content>
+  <md-divider></md-divider>
+  <md-dialog-actions layout="row">
+    <span flex></span>
+    <md-button ng-click="action('cancel')" class="md-raised blue darken-2 grey-text text-lighten-2">
+      Close
+    </md-button>
+  </md-dialog-actions>
+</md-dialog>

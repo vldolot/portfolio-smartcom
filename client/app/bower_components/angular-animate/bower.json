@@ -1,0 +1,9 @@
+{
+  "name": "angular-animate",
+  "version": "1.5.0-rc.1",
+  "main": "./angular-animate.min.js",
+  "ignore": [],
+  "dependencies": {
+    "angular": "1.5.0-rc.1"
+  }
+}
